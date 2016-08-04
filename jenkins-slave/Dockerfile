@@ -19,7 +19,7 @@ RUN git config --global user.email "mukul37@gmail.com"
 RUN git config --global user.name "Mukul"
 
 # Copy clover
-COPY  clover /opt/atpco/clover-ant/
+#COPY  clover /opt/atpco/clover-ant/
 
 # Copy script
 COPY jenkins-slave.sh /opt/jenkins-slave/bin/
