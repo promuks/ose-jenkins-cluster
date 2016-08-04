@@ -8,7 +8,7 @@ ENV JAVA_HOME /usr/lib/jvm/java
 
 RUN yum install -y git tar zip unzip which java-1.8.0-openjdk-devel && \
     yum clean all && \
-    useradd -u 1001 -r -m -d ${HOME} -s /sbin/nologin -c "Jenkins Slave" jenkins-slave && \
+    useradd -u 1001 testac -r -m -d ${HOME} -s /sbin/nologin -c "Jenkins Slave" jenkins-slave && \
     mkdir -p /opt/jenkins-slave/bin /var/lib/jenkins && \
     curl -fsSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
       && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
@@ -26,7 +26,7 @@ RUN curl --create-dirs -sSLo /opt/jenkins-slave/bin/swarm-client-$JENKINS_SWARM_
   && curl --create-dirs -sSLo /opt/jenkins-slave/bin/slave.jar http://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/$JNLP_SLAVE_VERSION/remoting-$JNLP_SLAVE_VERSION.jar \
   && chmod -R 775 /opt/jenkins-slave /var/lib/jenkins && \
   chown -R jenkins-slave:root /opt/jenkins-slave /var/lib/jenkins
-RUN useradd -u 1001 testac
+
 WORKDIR /var/lib/jenkins
 
 VOLUME /var/lib/jenkins
