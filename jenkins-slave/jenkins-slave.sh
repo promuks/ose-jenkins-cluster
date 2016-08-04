@@ -1,7 +1,7 @@
 #!/bin/bash
 
-master_username="atp1msn"
-master_password=${JENKINS_PASSWORD:-"password"}
+master_username="'atp1msn'"
+master_password="'panukeyanuJi9okm'"
 slave_executors=${EXECUTORS:-"1"}
 
 
