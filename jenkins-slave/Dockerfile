@@ -14,6 +14,10 @@ RUN yum install -y git tar zip unzip which java-1.8.0-openjdk-devel && \
       && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
       && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
+RUN git config --global url."https://".insteadOf git://
+RUN git config --global user.email "mukul37@gmail.com" 
+RUN git config --global user.name "Mukul"
+
 # Copy script
 COPY jenkins-slave.sh /opt/jenkins-slave/bin/
 
