@@ -8,7 +8,8 @@ ENV JAVA_HOME /usr/lib/jvm/java
 
 RUN yum install -y git tar zip unzip which java-1.8.0-openjdk-devel && \
     yum clean all && \
-    useradd -u 1001 -r -m -d ${HOME} -s /sbin/nologin -c "Jenkins Slave" jenkins-slave && \
+    #useradd -u 1001 -r -m -d ${HOME} -s /sbin/nologin -c "Jenkins Slave" jenkins-slave && \
+    adduser --disabled-password --uid 1003 --gid 0 --gecos "Jenkins Slave" jenkins-slave  && \
     mkdir -p /opt/jenkins-slave/bin /var/lib/jenkins && \
     curl -fsSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
       && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
@@ -31,6 +32,6 @@ WORKDIR /var/lib/jenkins
 
 VOLUME /var/lib/jenkins
 
-USER 1001
+USER 1003
 
 ENTRYPOINT ["/opt/jenkins-slave/bin/jenkins-slave.sh"]
