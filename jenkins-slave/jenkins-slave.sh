@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "executing the changes..."
 whoami
 master_username="atp1msn"
 master_password=${JENKINS_PASSWORD:-"password"}
