@@ -9,7 +9,7 @@ ENV JAVA_HOME /usr/lib/jvm/java
 RUN yum install -y git tar zip unzip which java-1.8.0-openjdk-devel && \
     yum clean all && \
     export INSTALL_PKGS="nss_wrapper gettext origin-clients" && \
-    yum -y --setopt=tsflags=nodocs install epel-release centos-release-openshift-origin && \
+    yum -y --setopt=tsflags=nodocs install epel-release rhel-7-server-ose-3.1-rpms && \
     yum install -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all && \    
