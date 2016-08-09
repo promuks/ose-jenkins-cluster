@@ -8,8 +8,9 @@ ENV MAVEN_VERSION 3.3.3
 ENV JAVA_HOME /usr/lib/jvm/java
 
 RUN yum --disablerepo=* --enablerepo=rhel-7-server-rpms install yum-utils
+RUN yum-config-manager --enable rhel-7-server-rpms rhel-7-server-extras-rpms rhel-7-server-ose-3.1-rpms
 
-RUN yum-config-manager --disable epel --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.1-rpms" && \
+RUN yum-config-manager --disable epel  && \
     INSTALL_PKGS="rsync gettext git tar zip unzip nss_wrapper java-1.8.0-openjdk atomic-openshift-clients jenkins-1.651.2 jenkins-plugin-kubernetes jenkins-plugin-openshift-pipeline jenkins-plugin-credentials jenkins-plugin-ace-editor jenkins-plugin-branch-api jenkins-plugin-cloudbees-folder jenkins-plugin-durable-task jenkins-plugin-git jenkins-plugin-git-client jenkins-plugin-git-server jenkins-plugin-handlebars jenkins-plugin-jquery-detached jenkins-plugin-mapdb-api jenkins-plugin-matrix-project jenkins-plugin-mercurial jenkins-plugin-momentjs jenkins-plugin-multiple-scms jenkins-plugin-pipeline-build-step jenkins-plugin-pipeline-input-step jenkins-plugin-pipeline-rest-api jenkins-plugin-pipeline-stage-step jenkins-plugin-pipeline-stage-view jenkins-plugin-pipeline-utility-steps jenkins-plugin-plain-credentials jenkins-plugin-scm-api jenkins-plugin-script-security jenkins-plugin-ssh-credentials jenkins-plugin-structs jenkins-plugin-subversion jenkins-plugin-workflow-aggregator jenkins-plugin-workflow-api jenkins-plugin-workflow-basic-steps jenkins-plugin-workflow-cps jenkins-plugin-workflow-cps-global-lib jenkins-plugin-workflow-durable-task-step jenkins-plugin-workflow-job jenkins-plugin-workflow-multibranch jenkins-plugin-workflow-remote-loader jenkins-plugin-workflow-scm-step jenkins-plugin-workflow-step-api jenkins-plugin-workflow-step-api jenkins-plugin-workflow-support jenkins-plugin-openshift-sync" && \
     yum install -y $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
