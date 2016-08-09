@@ -13,7 +13,7 @@ RUN yum install -y git tar zip unzip which java-1.8.0-openjdk-devel && \
     #yum install -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     #rpm -V $INSTALL_PKGS && \
     #yum clean all && \    
-    useradd -u 1001 -r -m -d ${HOME} -s /sbin/nologin -c "Jenkins Slave" jenkins-slave && \
+    useradd -u 1003 -r -m -d ${HOME} -s /sbin/nologin -c "Jenkins Slave" jenkins-slave && \
     #adduser --uid 1003 --gid 0 -c "Jenkins Slave" jenkins-slave  && \
     mkdir -p /opt/jenkins-slave/bin /var/lib/jenkins && \
     curl -fsSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
@@ -37,6 +37,6 @@ WORKDIR /var/lib/jenkins
 
 VOLUME /var/lib/jenkins
 
-USER 1001
+USER 1003
 
 ENTRYPOINT ["/opt/jenkins-slave/bin/jenkins-slave.sh"]
