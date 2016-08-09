@@ -14,7 +14,7 @@ RUN yum-config-manager --disable epel  && \
     INSTALL_PKGS="rsync gettext git tar zip unzip nss_wrapper java-1.8.0-openjdk atomic-openshift-clients" && \
     yum install -y $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all  && \
+    yum clean all
     
 RUN yum install -y git tar zip unzip which java-1.8.0-openjdk-devel && \
     yum clean all && \
