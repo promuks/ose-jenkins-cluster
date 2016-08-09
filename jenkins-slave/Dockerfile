@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/rhel7/rhel
+#FROM registry.access.redhat.com/rhel7/rhel
+FROM rhel7.2
 
 ENV JENKINS_SWARM_VERSION 2.0
 ENV JNLP_SLAVE_VERSION 2.52
