@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "executing the changes..."
 whoami
-master_username="atp1msn"
+master_username="osejenkins"
 master_password=${JENKINS_PASSWORD:-"password"}
 slave_executors=${EXECUTORS:-"1"}
 
