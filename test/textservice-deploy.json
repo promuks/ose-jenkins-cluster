@@ -1,0 +1,225 @@
+{
+  "kind": "List",
+  "apiVersion": "v1",
+  "metadata": {},
+  "items": [
+    {
+      "kind": "ImageStream",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "textservice",
+        "generation": 1,
+        "labels": {
+          "app": "textservice"
+        }
+      },
+      "spec": {
+        "tags": [
+          {
+            "name": "latest",
+            "from": {
+              "kind": "ImageStreamTag",
+              "name": "textservice:latest"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "DeploymentConfig",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "textservice",
+        "labels": {
+          "app": "textservice"
+        }
+      },
+      "spec": {
+        "strategy": {
+          "type": "Rolling",
+          "rollingParams": {
+            "updatePeriodSeconds": 1,
+            "intervalSeconds": 1,
+            "timeoutSeconds": 600,
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          },
+          "resources": {}
+        },
+        "triggers": [
+          {
+            "type": "ConfigChange"
+          },
+          {
+            "type": "ImageChange",
+            "imageChangeParams": {
+              "automatic": true,
+              "containerNames": [
+                "textservice"
+              ],
+              "from": {
+                "kind": "ImageStreamTag",
+                "name": "textservice:latest"
+              }
+            }
+          }
+        ],
+        "replicas": 1,
+        "test": false,
+        "selector": {
+          "app": "textservice",
+          "deploymentconfig": "textservice"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "textservice",
+              "deploymentconfig": "textservice"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "textservice",
+                "image": "textservice",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                   {
+						"name": "db2driver",
+						"valueFrom": {
+							"configMapKeyRef": {
+								"name": "db2config",
+								"key": "db2.db.driver"
+							}
+						}
+					},
+					{
+						"name": "db2url",
+						"valueFrom": {
+							"configMapKeyRef": {
+								"name": "db2config",
+								"key": "db2.db.url"
+							}
+						}
+					},
+					{
+						"name": "db2user",
+						"valueFrom": {
+							"configMapKeyRef": {
+								"name": "db2config",
+								"key": "db2.db.user"
+							}
+						}
+					},
+					{
+						"name": "db2password",
+						"valueFrom": {
+							"configMapKeyRef": {
+								"name": "db2config",
+								"key": "db2.db.password"
+							}
+						}
+					},
+					{
+						"name": "mysqldriver",
+						"valueFrom": {
+							"configMapKeyRef": {
+								"name": "mysqlconfig",
+								"key": "mysql.db.driver"
+							}
+						}
+					},
+					{
+						"name": "mysqlurl",
+						"valueFrom": {
+							"configMapKeyRef": {
+								"name": "mysqlconfig",
+								"key": "mysql.db.url"
+							}
+						}
+					},
+					{
+						"name": "mysqluser",
+						"valueFrom": {
+							"configMapKeyRef": {
+								"name": "mysqlconfig",
+								"key": "mysql.db.user"
+							}
+						}
+					},
+					{
+						"name": "mysqlpassword",
+						"valueFrom": {
+							"configMapKeyRef": {
+								"name": "mysqlconfig",
+								"key": "mysql.db.password"
+							}
+						}
+					}
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "imagePullPolicy": "Always"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {}
+          }
+        }
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "textservice",
+        "labels": {
+          "app": "textservice"
+        }
+      },
+      "spec": {
+        "ports": [
+          {
+            "name": "8080-tcp",
+            "protocol": "TCP",
+            "port": 9993,
+            "targetPort": 9993
+          }
+        ],
+        "selector": {
+          "app": "textservice",
+          "deploymentconfig": "textservice"
+        },
+        "type": "ClusterIP",
+        "sessionAffinity": "None"
+      }
+    },
+    {
+      "kind": "Route",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "textservice",
+        "labels": {
+          "app": "textservice"
+        }
+      },
+      "spec": {
+        "host": "",
+        "to": {
+          "kind": "Service",
+          "name": "textservice"
+        },
+        "port": {
+          "targetPort": "8080-tcp"
+        }
+      }
+    }
+  ]
+}

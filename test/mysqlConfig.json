@@ -1,0 +1,13 @@
+{
+  "kind": "ConfigMap",
+  "apiVersion": "v1",
+  "metadata": {
+  "name": "mysqlconfig"
+ },
+   "data": {
+     "mysql.db.driver": "com.mysql.jdbc.Driver",
+     "mysql.db.password": "0az3qnKxHjGmaQg7x4tqhg==",
+     "mysql.db.url": "jdbc:mysql://testfme01.atpco.org:3306/datatables",
+     "mysql.db.user": "cifadmin"
+   }
+}
